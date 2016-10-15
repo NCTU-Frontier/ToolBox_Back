@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 	'django.contrib.admin',
 	'django.contrib.auth',
+	'django.contrib.sites',
 	'django.contrib.contenttypes',
 	'django.contrib.sessions',
 	'django.contrib.messages',
@@ -38,8 +39,9 @@ INSTALLED_APPS = [
 	'rest_framework',
 	'django_filters',
 	'rest_framework_swagger',
-	'api', ]
-
+	'api',
+]
+SITE_ID = 1
 MIDDLEWARE_CLASSES = [
 	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
@@ -52,10 +54,26 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'toolbox.urls'
 
-TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates', 'DIRS': [], 'APP_DIRS': True, 'OPTIONS': {
-	'context_processors': ['django.template.context_processors.debug', 'django.template.context_processors.request',
-	                       'django.contrib.auth.context_processors.auth',
-	                       'django.contrib.messages.context_processors.messages', ],},}, ]
+TEMPLATES = [
+	{
+		'BACKEND': 'django.template.backends.django.DjangoTemplates',
+		'DIRS': [
+		],
+		'APP_DIRS': True,
+		'OPTIONS': {
+			'context_processors': [
+				'django.contrib.auth.context_processors.auth',
+				'django.template.context_processors.debug',
+				'django.template.context_processors.i18n',
+				'django.template.context_processors.media',
+				'django.template.context_processors.static',
+				'django.template.context_processors.tz',
+				'django.contrib.messages.context_processors.messages',
+			]
+		}
+
+	}
+]
 
 WSGI_APPLICATION = 'toolbox.wsgi.application'
 
@@ -89,6 +107,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_FINDERS = (
+	'django.contrib.staticfiles.finders.FileSystemFinder',
+	'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+	#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
 REST_FRAMEWORK = {'DEFAULT_AUTHENTICATION_CLASSES': (
-	'rest_framework.authentication.BasicAuthentication', 'rest_framework.authentication.SessionAuthentication',)}
+	'rest_framework.authentication.BasicAuthentication',
+	'rest_framework.authentication.SessionAuthentication',
+)}
 AUTH_USER_MODEL = 'api.CustomUser'
+SWAGGER_SETTINGS = {
+	'LOGIN_URL': 'rest_framework:login',
+	'LOGOUT_URL': 'rest_framework:logout',
+	'USE_SESSION_AUTH': True,
+	'DOC_EXPANSION': 'list',
+	'APIS_SORTER': 'alpha',
+	'SHOW_REQUEST_HEADERS': True
+}

@@ -1,11 +1,13 @@
-from django.shortcuts import render
-from rest_framework.decorators import api_view, renderer_classes
-from rest_framework import response, schemas
-from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions, generics, viewsets, status
+from django.contrib.auth import get_user_model
+from .serializers import *
+
+User = get_user_model()
 
 
-@api_view()
-@renderer_classes([OpenAPIRenderer, SwaggerUIRenderer])
-def schema_view(request):
-	generator = schemas.SchemaGenerator(title='ToolBox API')
-	return response.Response(generator.get_schema(request=request))
+class UserViewSet(viewsets.ModelViewSet):
+	queryset = User.objects.all()
+	serializer_class = UserSerializer
+	lookup_field = 'username'

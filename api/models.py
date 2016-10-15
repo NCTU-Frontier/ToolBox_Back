@@ -29,6 +29,9 @@ class CustomUserManager(BaseUserManager):
 		user.save(using=self._db)
 		return user
 
+	# def get_queryset(self):
+	# 	return super(BaseUserManager, self).get_queryset()
+
 
 # Create your models here.
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -40,7 +43,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 	is_active = models.BooleanField('active_status', default=True)
 	date_joined = models.DateTimeField('join date', auto_now=datetime.now)
 
-	object = CustomUserManager()
+	objects = CustomUserManager()
 
 	USERNAME_FIELD = 'username'
 	REQUIRED_FIELDS = ['email']
