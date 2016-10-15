@@ -4,22 +4,22 @@ from datetime import datetime
 
 
 class CustomUserManager(BaseUserManager):
-	def create_user(self, username, email, password=None):
+	def create_user(self, name, email, password=None):
 		if not email:
 			raise ValueError('Email is required')
 		user = self.model(
-			username=username,
+			name=name,
 			email=self.normalize_email(email),
 		)
 		user.set_password(password)
 		user.save()
 		return user
 
-	def create_superuser(self, username, email, password=None):
+	def create_superuser(self, name, email, password=None):
 		if not email:
 			raise ValueError('Email is required')
 		user = self.model(
-			username=username,
+			name=name,
 			email=self.normalize_email(email),
 		)
 		user.set_password(password)
@@ -45,15 +45,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 	objects = CustomUserManager()
 
-	USERNAME_FIELD = 'username'
-	REQUIRED_FIELDS = ['email']
+	USERNAME_FIELD = 'email'
 
 	class Meta:
 		verbose_name = 'user'
 		verbose_name_plural = 'users'
 
 	def __str__(self):
-		return self.username
+		return self.name
 
 	def get_short_name(self):
 		return self.name

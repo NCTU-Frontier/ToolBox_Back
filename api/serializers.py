@@ -8,12 +8,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = User
 		fields = ('url', 'username', 'email', 'student_id', 'password')
-		# write_only_fields = ('password',)
 		extra_kwargs = {
-			'url': {'view_name': 'users-detail', 'lookup_field': 'username',},
+			'url': {'view_name': 'users-detail', 'lookup_field': 'pk'},
 			'password': {'write_only': True}
 		}
 
 
-class NCTUSignUpSerializer:
-	code = serializers.CharField('code')
+class NCTUSignUpSerializer(serializers.Serializer):
+	code = serializers.CharField(max_length=100)
