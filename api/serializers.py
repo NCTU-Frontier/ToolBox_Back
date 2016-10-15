@@ -14,6 +14,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 			'password': {'write_only': True}
 		}
 
-	def create(self, validated_data):
-		user = User.objects.create_user(**validated_data)
-		return user
+
+class NCTUSignUpSerializer:
+	code = serializers.CharField('code')
