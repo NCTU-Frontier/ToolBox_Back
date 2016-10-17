@@ -4,8 +4,12 @@ from rest_framework import authentication, permissions, generics, viewsets, stat
 from .serializers import *
 from django.conf import settings
 import requests
-from django.contrib.auth import login, logout
 from django.contrib.auth import get_user_model
+from rest_framework_jwt.settings import api_settings
+from datetime import datetime
+
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 User = get_user_model()
 NCTU_OAUTH_URL = 'https://id.nctu.edu.tw'
@@ -51,10 +55,13 @@ class NCTUSignUp(generics.CreateAPIView):
 				user = User(email=email, student_id=student_id)
 				user.save()
 			# login(request, user)
-
+			payload = jwt_payload_handler(user)
+			response = Response()
+			response['token'] = jwt_encode_handler(payload)
+			return response
 		else:
-			raise ValueError('Please Authorize Again')
-		return Response("good", status=status.HTTP_200_OK)
+			# raise ValueError('Please Authorize Again')
+			return Response('Please Authorize Again', status=status.HTTP_401_UNAUTHORIZED)
 
 
 '''
