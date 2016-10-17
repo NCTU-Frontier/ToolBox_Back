@@ -2,7 +2,7 @@
 # Created by https://www.gitignore.io/api/mac,macos,vim,linux,pycharm,python,django
 
 #!! ERROR: mac is undefined. Use list command to see defined gitignore types !!#
-
+.idea
 ### macOS ###
 *.DS_Store
 .AppleDouble
