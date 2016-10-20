@@ -7,7 +7,7 @@ User = get_user_model()
 class UserSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = User
-		fields = ('url', 'username', 'email', 'student_id', 'password')
+		fields = ('url', 'email', 'student_id', 'password')
 		extra_kwargs = {
 			'url': {'view_name': 'users-detail', 'lookup_field': 'pk'},
 			'password': {'write_only': True}

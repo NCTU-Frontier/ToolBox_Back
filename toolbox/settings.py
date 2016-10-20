@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 	'toolbox',
 	'rest_framework',
 	'django_filters',
-	'rest_framework_swagger',
+	'rest_framework_docs',
 	'api',
 ]
 SITE_ID = 1
